@@ -1,12 +1,23 @@
 # Sintaxis y Semántica de los Lenguajes (SSL)
 RUBIN - Repositorio Personal para Trabajos Individuales
 
-### Curso: K2051
+### Curso: 
+K2051
 
-### Año de cursada: SEGUNDO
+### Año de cursada: 
+SEGUNDO
 
-### Legajo: 143872-4
+### Legajo: 
+143872-4
 
-### Apellido: RUBIN
+### Apellido: 
+RUBIN
 
-### Nombre: URIEL
+### Nombre: 
+URIEL
+
+#### Usuario Github:
+urieeel19
+
+#### Email
+urielrubin03@hotmail.com
