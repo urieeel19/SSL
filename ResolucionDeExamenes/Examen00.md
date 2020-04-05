@@ -4,16 +4,28 @@
 Es un profesional encargado de crear y aplicar tecnologías informáticas para el beneficio de las personas, de las empresas, de las organizaciones y del país.
 
 #### 2. (1 punto) Defina información.
-La informacion es un conjunto de datos procesados con un determinado interesa para una o un grupo de personas.
+La informacion es un conjunto de datos procesados con un determinado interes para una o un grupo de personas.
 
 #### 3. (1 punto) Indique las asignaturas del área de programación.
-Las asignaturas de programación son: Matemática discreta, Algoritmos y estructura de datos, Algoritmos Complejos para Estructuras de Datos Avanzados, Sintaxis y semántica de los lenguajes, Paradigmas de programación, Sistemas operativos, Gestión de datos.
+Las asignaturas de programación son: 
+##### -Matemática discreta
+##### -Algoritmos y estructura de datos
+##### -Algoritmos Complejos para Estructuras de Datos Avanzados
+##### -Sintaxis y semántica de los lenguajes
+##### -Paradigmas de programación
+##### -Sistemas operativos
+##### -Gestión de datos.
 
 #### 4. (1 punto) Indique las asignaturas del área de sistemas de información.
-Las asignaturas relacionadas con los sistemas de información son: Sistemas y organizaciones, Análisis de sistemas, Diseño de sistemas, Ingeniería de requisitos, Sistemas aplicados a la gestión empresarial.
+Las asignaturas relacionadas con los sistemas de información son: 
+##### Sistemas y organizaciones
+##### Análisis de sistemas
+##### Diseño de sistemas
+##### Ingeniería de requisitos
+##### Sistemas aplicados a la gestión empresarial.
 
 #### 5. (1 punto) Indique el paradigma de programación aplicado en primer año de la carrera.
-El paradigma de programacion utilizado en el primero año de la carrera es el “programacion estructurada”.
+El paradigma de programacion utilizado en el primero año de la carrera es el denominado “programacion estructurada”.
 
 #### 6. (1 punto) Defina abstracción.
 La abstracción consiste en aislar un elemento de su contexto o del resto de los elementos que lo acompañan. Es decir, hace enfasis en que hace y no en como esta hecho (implementación).
