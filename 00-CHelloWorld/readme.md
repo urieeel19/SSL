@@ -1,2 +1,2 @@
 ## Compilador utilizado
-MinGW GCC
+MinGW32 GCC
