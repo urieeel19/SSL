@@ -1,1 +1,2 @@
-
+## Compilador utilizado
+MinGW GCC
