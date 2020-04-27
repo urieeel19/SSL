@@ -21,6 +21,6 @@
 
 |           | Hello.c  | Hello.cpp | Observaciones                                                |   |
 |-----------|----------|-----------|--------------------------------------------------------------|---|
-|  Lexico   |          |           |                                                              |   |
+|  Lexico   | No existe el ::         |           |                                                              |   |
 | Sintaxis  |          |           | La sintaxis de C en C++ es permitida, viceversa no           |   |
 | Semantica | printf() | cout <<   | printf es una funcion, cout una clase, y C no soporta clases |   |
