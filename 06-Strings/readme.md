@@ -47,7 +47,7 @@ La parte pública de la biblioteca se desarrolla en el header "String.h" , el cu
 a. Escribir el AnálisisComparativo.md con la comparación de strings en C versus otro lenguaje de programación a elección.
 
 2. Parte II
-a. Para cada operación, escribir en Strings.md la especificación matemática de la operación, con conjuntos de salida y de llegada, y con especificación de la operación.
+a.Para cada operación, escribir en Strings.md la especificación matemática de la operación, con conjuntos de salida y de llegada, y con especificación de la operación.
 b. Escribir el Makefile .
 c. Por cada operación:
 i. Escribir las pruebas en StringsTest.c .
