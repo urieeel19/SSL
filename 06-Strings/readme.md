@@ -1,53 +1,44 @@
 ### Trabajo #6 - Operaciones de Strings
 
-
 Este trabajo tiene dos partes, una de análisis comparativo y otra de desarrollo.
 El análisis comparativo es sobre el tipo de dato String en el lenguaje de
 programación C versus otro lenguaje de programación a elección; mientras que
 el desarrollo está basado en los ejercicios 20 y 21 del Capítulo #1 del Volumen
 #1 de [MUCH2012], que a continuación transcribe:
 
----------------
-Investigue y construya, en LENGUAJE C, la función que realiza cada
-operación solicitada:
-* Ejercicio 20 *
+Investigue y construya, en LENGUAJE C, la función que realiza cada operación solicitada:
+Ejercicio 20
 (a) Calcula la longitud de una cadena;
 (b) Determina si una cadena dada es vacía.
 (c) Concatena dos cadenas.
-* Ejercicio 20 *
+ Ejercicio 20
 Construya un programa de testeo para cada función del ejercicio anterior.
-
-------------------
 
 ## Objetivos
 
-1. Parte I — Análisis Comparativo del tipo String en Lenguajes de Programación:
+1. **Parte I** — Análisis Comparativo del tipo String en Lenguajes de Programación:
 Realizar un análisis comparativo de dato String en el lenguaje C versus un
 lenguaje de programación a elección. El análisis debe contener, por lo menos,
 los siguientes ítems:
+
 a. ¿El tipo es parte del lenguaje en algún nivel?
 b. ¿El tipo es parte de la biblioteca?
 c. ¿Qué alfabeto usa?
 d. ¿Cómo se resuelve la alocación de memoria?
 e. ¿El tipo tiene mutabilidad o es inmutable?
 f. ¿El tipo es un first class citizen?
-g. ¿Cuál es la mecánica para ese tipo cuando se los pasa como
-argumentos?
+g. ¿Cuál es la mecánica para ese tipo cuando se los pasa como argumentos?
 h. ¿Y cuando son retornados por una función?
-Las anteriores preguntas son disparadores para realizar una análisis
-profundo.
-2. Parte II — Biblioteca para el Tipo String: Desarrollar una biblioteca con las
-siguientes operaciones de strings:
+
+Las anteriores preguntas son disparadores para realizar una análisis profundo.
+2. **Parte II** — Biblioteca para el Tipo String: Desarrollar una biblioteca con las siguientes operaciones de strings:
 a. GetLength ó GetLongitud
 b. IsEmpty ó IsVacía
 c. Power ó Potenciar
 d. Una operación a definir libremente.
-Notar que en vez de la operación concatenar que propone [MUCH2012] se
-debe desarrollar Power ó Potenciar que repite un string n veces.
-La parte pública de la biblioteca se desarrolla en el header "String.h" , el
-cual no debe incluir <string.h> . El programa que prueba la biblioteca, por
-supuesto, incluye a "String.h" , pero sí puede incluir <string.h> para facilitar
-las comparaciones.
+
+Notar que en vez de la operación concatenar que propone [MUCH2012] se debe desarrollar Power ó Potenciar que repite un string n veces.
+La parte pública de la biblioteca se desarrolla en el header "String.h" , el cual no debe incluir <string.h> . El programa que prueba la biblioteca, por supuesto, incluye a "String.h" , pero sí puede incluir <string.h> para facilitar las comparaciones.
 
 ## Temas
 * Strings.
