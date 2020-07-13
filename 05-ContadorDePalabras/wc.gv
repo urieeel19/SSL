@@ -1,0 +1,11 @@
+digraph finite_state_machine {
+	rankdir=LR;
+    
+	node [shape = doublecircle]; IN OUT
+	OUT -> IN [ label = "otro\n++nw\n++nc " ];
+	OUT -> OUT [ label = "'\\n'\n++nl\n++nc " ];
+	OUT -> OUT [ label = "'\\t'|' '\n++nc " ];
+	IN -> IN [ label = "otro\n++nc " ];
+	IN -> OUT [ label = "'\\t'|' '\n++nc " ];
+	IN -> OUT [ label = "'\\n'\n++nc\n++nl " ];
+}
