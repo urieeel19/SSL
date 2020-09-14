@@ -1,4 +1,4 @@
-# Calculadora Infija: Construcción Manual 🧮
+# Calculadora notacion Infija: Construcción Manual
 
 ---
 
