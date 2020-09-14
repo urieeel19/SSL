@@ -25,11 +25,3 @@
     <operador> -> <adición> <producto>
 ```
 
----
-
-### Automata Finito Deterministico 
-
-<img src="/06-CalcInfManual/imgs/afd.png" alt="Autómata finito determinístico" style="zoom:30%;" />
-
----
-
