@@ -1,8 +1,8 @@
-# Calculadora Infija: Construcción Manual 🧮
+# Calculadora en notacion Infija ( Operando Operador Operado): Construcción Manual 
 
 ---
 
-### Gramática léxica 🔤
+### Gramática léxica 
 
 ```c
 <token> -> uno de <identificador> <constante> <operador>
@@ -17,7 +17,7 @@
 
 ---
 
-### Gramática sintáctica 🔗
+### Gramática sintáctica 
 
 ```c
 <expresión> -> <operando> <operador> <operando> (<operador> <operando>)*
@@ -27,7 +27,7 @@
 
 ---
 
-### AFD ◾
+### Automata Finito Deterministico 
 
 <img src="/06-CalcInfManual/imgs/afd.png" alt="Autómata finito determinístico" style="zoom:30%;" />
 
