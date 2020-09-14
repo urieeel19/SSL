@@ -1,4 +1,4 @@
-# Calculadora en notacion Infija ( Operando Operador Operado): Construcción Manual 
+# Calculadora en notacion Infija ( Operando Operador Operando): Construcción Manual 
 
 ---
 
