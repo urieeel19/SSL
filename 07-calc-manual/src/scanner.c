@@ -8,17 +8,7 @@
 
 //-------------- PROTOTIPOS BUFFER ---------------//
 void AddCharacter(char);
-char buffer[10] = {
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0',
-    '\0'};
+char buffer[10] = {};
 void ShowBuffer();
 void CleanBuffer();
 int bufferIndex = 0;

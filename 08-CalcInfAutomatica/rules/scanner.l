@@ -38,6 +38,8 @@
 
 int GetNextToken(void){
         int incomingToken = yylex();
-        return incomingToken != 0 ? incomingToken
-                                    : 1;
+        if(incomingToken == NAT){
+             exit(EXIT_FAILURE);       
+        }
+        return incomingToken;
 }
