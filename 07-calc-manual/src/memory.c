@@ -1,20 +1,15 @@
-#include <stdio.h> //printf
-#include <string.h> //strcmp
 #include "../inc/memory.h"
+#include <stdio.h> //printf
+#include <stdlib.h> //exit
+#include <string.h> //strcmp
 
+// Declaración de variables
 unsigned memoryLastPosition = 0;
 variable Memory[MEMORY_SIZE];
 
-//Prototipos funciones privadas
+// Definición de funciones públicas para el manejo de memoria
 
-//Definiciones de funciones privadas
-
-//FUNCIONES PARA MANEJO DE MEMORIA
-
-void mostrarVariable(int);
-void mostrarNombre(char[]);
-
-//Definición de funciones públicas
+// GetPosition devuelve la posición si existe, sino, declara y devuelve esa posición.
 unsigned GetPosition(char name[])
 {
     for (unsigned i = 0; i <= memoryLastPosition; ++i)
@@ -29,11 +24,13 @@ unsigned GetPosition(char name[])
     return memoryLastPosition - 1;
 }
 
+// Assign le asigna a la posición pasada por parámetro el valor requerido.
 void Assign(unsigned position, int value)
 {
     Memory[position].value = value;
 }
 
+//GetValue busca por nombre la variable y devuelve su valor.
 int GetValue(char name[])
 {
     for (unsigned i = 0; i <= memoryLastPosition; ++i)
@@ -43,29 +40,5 @@ int GetValue(char name[])
             return Memory[i].value;
         }
     }
-    printf("\n\nEl identificador %s no existe\n\n", name);
-    return -1;
-}
-
-void mostrarMemoria()
-{
-    printf("\n--------------MEMORIA---------------\n");
-    for (int i = 0; i < memoryLastPosition; i++)
-        mostrarVariable(i);
-}
-
-void mostrarVariable(int i)
-{
-    mostrarNombre(Memory[i].name);
-    printf("valor: %d", Memory[i].value);
-}
-
-void mostrarNombre(char nombre[])
-{
-    printf("\nnombre: ");
-    for (int i = 0; i < VARIABLE_SIZE; i++)
-    {
-        printf("%c", nombre[i]);
-    }
-    printf("\t");
+    exit(2);
 }

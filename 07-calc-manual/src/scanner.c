@@ -1,22 +1,22 @@
-#include "scanner.h"
+#include "../inc/scanner.h"
 #include <stdio.h>  //printf
 #include <stdlib.h> //exit
 #include <ctype.h>  //isalpha isdigit
 #include <string.h> //strcpy
 
-//void mostrarTipo(TOKEN);
-
-//-------------- PROTOTIPOS BUFFER ---------------//
-void AddCharacter(char);
-char buffer[10] = {};
-void ShowBuffer();
-void CleanBuffer();
+// Prototipos para el manejo del buffer
+char buffer[MAX_NAME_LENGTH] = {};
+void AddCharacter(char); //Agrega caracter al buffer
+void CleanBuffer();      //Limpia el buffer
 int bufferIndex = 0;
 
-//-------------- PROTOTIPOS TOKENS ---------------//
-TOKEN CreateToken(tipoDeToken, char[]);
+// Prototipo para la creación de TOKENs
+TOKEN CreateToken(tipoDeToken);
+//Prototipo para función scanner
+TOKEN Scanner(void);
 
-//----------------- ESTADOS ---------------//
+// Definiciones privadas ---------------------------
+// Definición de estados
 typedef enum
 {
     Q0_inicial,
@@ -27,31 +27,41 @@ typedef enum
     Q5_parizquierdo,
     Q6_parderecho,
     Q7_igual,
-    Q9_definicion,
-    Q10_fds,
-    Q11_fdt,
-    Q12_error
+    Q8_definicion,
+    Q9_fds,
+    Q10_fdt,
+    Q11_lexError
 } State;
 
-//----------MAIN PARA DEBUG-- ------- //
-// int main(void)
-// {
-//     TOKEN t;
-//     while ((t = GetNextToken()).type != FDT)
-//     {
-//         mostrarTipo(t);
-//     };
-//     printf("\n\n");
-//     return 0;
-// }
+// Prototipos de funciones privadas ----------------
+TOKEN ActionState_Qx(State, char, tipoDeToken);
 
-//---------- GetNextToken -----------//
+// Definición de flag público
+int keepLastToken = 0;
+
+// Declaración de variable auxiliar para mantener el último token
+TOKEN incomingToken;
+
+// Definición de funciones públicas ----------------
+// Definición de la función GetNextToken
 TOKEN GetNextToken(void)
 {
-    static State actualState = Q0_inicial;
-    static TOKEN incomingToken;
+    if (!keepLastToken)
+    {
+        incomingToken = Scanner();
+        keepLastToken = 1;
+    }
+    return incomingToken;
+}
+
+// Definición de funciones privadas ----------------
+// Definición de función Scanner
+TOKEN Scanner()
+{
+    State actualState = Q0_inicial;
     char c;
-    while ((c = getchar()) != EOF)
+    CleanBuffer();
+    while ((c = getchar()) != '#') // # Marca el EOF
     {
         switch (actualState)
         {
@@ -95,110 +105,70 @@ TOKEN GetNextToken(void)
             }
             if (c == '$')
             {
-                actualState = Q9_definicion;
+                actualState = Q8_definicion;
                 break;
             }
             if (c == ';')
             {
-                actualState = Q10_fds;
+                actualState = Q9_fds;
                 break;
             }
             if (c == '\n')
             {
-                actualState = Q11_fdt;
+                actualState = Q10_fdt;
                 break;
             }
-            actualState = Q12_error;
+            actualState = Q11_lexError;
             break;
 
         case Q1_identificador:
             if ((!isalpha(c)) && (!isdigit(c)))
-            {
-                actualState = Q0_inicial;
-                ungetc(c, stdin);
-                incomingToken = CreateToken(IDENTIFICADOR, buffer);
-                CleanBuffer();
-                return incomingToken;
-            }
+                return ActionState_Qx(actualState, c, IDENTIFICADOR);
             AddCharacter(c);
             break;
         case Q2_constante:
             if (!isdigit(c))
-            {
-                actualState = Q0_inicial;
-                ungetc(c, stdin);
-                incomingToken = CreateToken(CONSTANTE, buffer);
-                CleanBuffer();
-                return incomingToken;
-            }
+                return ActionState_Qx(actualState, c, CONSTANTE);
             AddCharacter(c);
             break;
 
         case Q3_adicion:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(SUMA, buffer);
-            return incomingToken;
+            return ActionState_Qx(actualState, c, SUMA);
 
         case Q4_producto:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(MULTIPLICACION, buffer);
-            CleanBuffer();
-            return incomingToken;
+            return ActionState_Qx(actualState, c, PRODUCTO);
 
         case Q5_parizquierdo:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(PARENIZQUIERDO, buffer);
-            return incomingToken;
+            return ActionState_Qx(actualState, c, PARENIZQUIERDO);
 
         case Q6_parderecho:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(PARENDERECHO, buffer);
-            return incomingToken;
+            return ActionState_Qx(actualState, c, PARENDERECHO);
 
         case Q7_igual:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(IGUAL, buffer);
-            return incomingToken;
+            return ActionState_Qx(actualState, c, IGUAL);
 
-        case Q9_definicion:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(DEF, buffer);
-            return incomingToken;
-
-        case Q10_fds:
-            actualState = Q0_inicial;
-            ungetc(c, stdin);
-            incomingToken = CreateToken(FDS, buffer);
-            return incomingToken;
-
-        case Q11_fdt:
-            if (c == '\n')
-            {
-                incomingToken = CreateToken(FDT, buffer);
-                return incomingToken;
-            }
+        case Q8_definicion:
+            return ActionState_Qx(actualState, c, DEFINICION);
+            
+        case Q9_fds:
+            return ActionState_Qx(actualState, c, FDS);
+            
+        case Q10_fdt:
+            if (c == '!')
+                return CreateToken(FDT);
             actualState = Q0_inicial;
             ungetc(c, stdin);
             break;
 
-        case Q12_error:
-            printf("[SCANNER] LEXICAL ERROR");
-            c = EOF;
-            exit(1);
-            break;
-
+        case Q11_lexError:
         default:
-            printf("[SCANNER] LEXICAL ERROR");
-            exit(1);
+            printf("\n[Scanner] Lexical error. El caracter no pertenece al alfabeto soportado.\n\n");
+            c = '#';
+            ungetc(c, stdin);
             break;
         }
     }
+    exit(4);
 }
 
 //---------- BUFFER ------------//
@@ -207,25 +177,16 @@ void AddCharacter(char c)
     buffer[bufferIndex] = c;
     bufferIndex++;
 }
-void ShowBuffer()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        printf(" [%d]", buffer[i]);
-    }
-}
+
 void CleanBuffer()
 {
-    for (int i = 0; i < 8; ++i)
-    {
-        buffer[i] = 0;
-    }
+    memset(buffer, 0, sizeof buffer);
     bufferIndex = 0;
 }
 
 //---------- MANEJO DE TOKENS ------//
 
-TOKEN CreateToken(tipoDeToken tipo, char buffer[])
+TOKEN CreateToken(tipoDeToken tipo)
 {
     TOKEN newToken;
     if (tipo == IDENTIFICADOR)
@@ -236,43 +197,8 @@ TOKEN CreateToken(tipoDeToken tipo, char buffer[])
     return newToken;
 }
 
-// void mostrarTipo(TOKEN t)
-// {
-
-//     switch (t.type)
-//     {
-//     case IDENTIFICADOR:
-//         printf("IDENTIFICADOR");
-//         break;
-//     case CONSTANTE:
-//         printf("CONSTANTE");
-//         break;
-//     case SUMA:
-//         printf("SUMA");
-//         break;
-//     case MULTIPLICACION:
-//         printf("MULTIPLICACION");
-//         break;
-//     case IGUAL:
-//         printf("IGUAL");
-//         break;
-//     case PARENDERECHO:
-//         printf("PARENDERECHO");
-//         break;
-//     case PARENIZQUIERDO:
-//         printf("PARENIZQUIERDO");
-//         break;
-//     case DEF:
-//         printf("DEF");
-//         break;
-//     case FDS:
-//         printf("FDS");
-//         break;
-//     case FDT:
-//         printf("FDT");
-//         break;
-//     default:
-//         printf("NAT");
-//         break;
-//     }
-// }
+TOKEN ActionState_Qx(State state, char c, tipoDeToken type_Qx){
+    state = Q0_inicial;
+    ungetc(c, stdin);
+    return CreateToken(type_Qx);
+}
