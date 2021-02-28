@@ -13,4 +13,6 @@ Resultado = 18
 Resultado = 36 
 Resultado = 55 
 Resultado = 44 
+Resultado = 5 
+Resultado = 10 
 [Parser] Finalizado de manera exitosa.

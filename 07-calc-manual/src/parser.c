@@ -31,17 +31,16 @@ int Factor(void);
 void Parser()
 {
     ListaSentencias();
+    Match(FDT);
     printf("[Parser] Finalizado de manera exitosa.");
 }
 
 //Definiciones de funciones privadas
 void ListaSentencias()
 {
-    Sentencia();
-    while (GetNextToken().type != FDT)
-    {
+    do
         Sentencia();
-    }
+    while (GetNextToken().type != FDT);
 }
 
 void Sentencia()
