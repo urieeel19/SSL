@@ -1,3 +1,9 @@
+/* memory.c
+ - Almacenamiento de variables enteras.
+ - Rubin Uriel - 1438724 - UTN FRBA
+ - 04/03/2021
+*/
+
 #include "../inc/memory.h"
 #include <stdio.h>  //printf
 #include <string.h> //strcmp
