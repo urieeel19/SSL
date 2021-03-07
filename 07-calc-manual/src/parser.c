@@ -89,12 +89,13 @@ int Expresion(void)
 int Termino(void)
 {
     int resultado = Factor();
-    while (GetNextToken().type == PRODUCTO)
-    {
+    switch (GetNextToken().type){
+    case PRODUCTO: 
         Match(PRODUCTO);
-        resultado = resultado * Factor();
-    }
-    return resultado;
+        resultado = resultado * Termino();
+        break;
+        default: return resultado;
+}
 }
 
 int Factor(void)
