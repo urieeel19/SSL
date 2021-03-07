@@ -27,3 +27,49 @@ int main()
     printf("\n\n%c Ingrese sentencias%c \n\n", 45, 58); */
     Parser();
 }
+
+
+/*
+Léxico: Categorías léxicas o Tokens (LR)
+Sintáctico: Categorías sintácticas (LIC)
+
+Una GIC es apropiada para balancear símbolos, por
+ejemplo, paréntesis
+
+Identificador → Letra |
+                Identificador Letra |
+                Identificador GuionBajo Letra
+
+Se dice que la gramática es recursiva a
+izquierda porque el no terminal de la
+izquierda aparece a la izquierda en la parte
+derecha de la producción
+
+Análisis Sintáctico Descendente Recursivo” (ASDR)
+Un ASDR es un parser del tipo top-down, es decir, parte del axioma y
+va armando el Árbol de Análisis Sintáctico (AAS) con derivación a izquierda.
+
+El AAS queda de modo tal que en las hojas están los terminales y en
+los nodos interiores los no terminales.
+
+IMPORTANTE: Match pertenece al scanner y es la única que
+hace avanzar mismo
+
+Determinar si una GIC es ambigua es un problema indecidible, es decir, no existe algoritmo que tomando
+cualquier GIC conteste por si o no.
+Para demostrar que es ambigua basta con encontrar una
+cadena que admita dos árboles de derivación diferentes.
+*/
+
+/*
+Cosa a hacer:
+-En la gramatica lexica y sintatica expresarlo como regex y muchnick
+-Agregar caso de prueba cuando supera el maximo
+-Validar que pasa si el nombre de la variable supera el maximo.
+-Detallar en el readme los caminos invalidos, strcopy falle.
+-Mejorar la parte del flag keepLastToken
+
+despues del match identificador, guardar el nombre en una variable auxiliar.
+entonces la funcion assing recibe el nombre y ahi implemento la logica de asignar el valor a la posicion
+-la variable keepLastToken no es necesaria delcrarla como extern
+*/

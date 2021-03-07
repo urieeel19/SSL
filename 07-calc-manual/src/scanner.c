@@ -3,6 +3,7 @@
 #include <stdlib.h> //exit
 #include <ctype.h>  //isalpha isdigit
 #include <string.h> //strcpy
+int keepLastToken = 0;
 
 // Prototipos para el manejo del buffer
 char buffer[MAX_NAME_LENGTH] = {};
@@ -35,9 +36,6 @@ typedef enum
 
 // Prototipos de funciones privadas ----------------
 TOKEN ActionState_Qx(State, char, tipoDeToken);
-
-// Definición de flag público
-int keepLastToken = 0;
 
 // Declaración de variable auxiliar para mantener el último token
 TOKEN incomingToken;
@@ -174,8 +172,13 @@ TOKEN Scanner()
 //---------- BUFFER ------------//
 void AddCharacter(char c)
 {
-    buffer[bufferIndex] = c;
-    bufferIndex++;
+    if(bufferIndex >= MAX_NAME_LENGTH -1){
+        CleanBuffer();
+        exit(5);
+    }else{
+        buffer[bufferIndex] = c;
+        bufferIndex++;
+    }
 }
 
 void CleanBuffer()

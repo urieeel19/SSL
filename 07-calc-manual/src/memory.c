@@ -7,7 +7,8 @@
 unsigned memoryLastPosition = 0;
 variable Memory[MEMORY_SIZE];
 
-// Definición de funciones públicas para el manejo de memoria
+// Definición de funciones privadas para el manejo de memoria
+unsigned GetPosition(char[]);
 
 // GetPosition devuelve la posición si existe, sino, declara y devuelve esa posición.
 unsigned GetPosition(char name[])
@@ -25,9 +26,9 @@ unsigned GetPosition(char name[])
 }
 
 // Assign le asigna a la posición pasada por parámetro el valor requerido.
-void Assign(unsigned position, int value)
-{
-    Memory[position].value = value;
+void Assign(char name[], int value)
+{   int index = GetPosition(name);
+    Memory[index].value = value;
 }
 
 //GetValue busca por nombre la variable y devuelve su valor.

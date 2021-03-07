@@ -2,6 +2,8 @@
 #include "../inc/parser.h"
 #include "../inc/memory.h"
 #include <stdlib.h> //exit
+#include <string.h>
+
 void ShowType(tipoDeToken);
 
 TOKEN tok; //Token actual
@@ -65,12 +67,12 @@ void Sentencia()
 }
 
 void Definicion()
-{
-    Match(IDENTIFICADOR);                           //Matcheo IDENTIFICADOR
-    unsigned position = GetPosition(tok.data.name); //t es el último token obtenido. Busco si existe en memoria
+{   char auxName [MAX_NAME_LENGTH];
+    Match(IDENTIFICADOR); //Matcheo IDENTIFICADOR
+    strcpy(auxName, tok.data.name);                       
     Match(IGUAL);                                   //Matcheo IGUAL
     Match(CONSTANTE);                               //Matcheo CONSTANTE a ser asignada.
-    Assign(position, tok.data.value);               //Asignacion
+    Assign(auxName, tok.data.value);               //Asignacion
 }
 
 int Expresion(void)
@@ -134,3 +136,5 @@ void ShowType(tipoDeToken tipo)
 {
     printf("Tipo: %s\n" , tipos[tipo]);
 }
+
+//josemariasola@frba.utn.edu.ar
