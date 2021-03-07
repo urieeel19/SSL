@@ -38,5 +38,5 @@ test : $(TARGET)
 	@diff -q -s $(ARCHIVO_ESPERADO) $(ARCHIVO_OBTENIDO)
 
 run : $(TARGET)
-	@echo Inicio de calculadora Manual -Doble enter para finalizar-
+	@echo Inicio de calculadora Manual -"!" para finalizar-
 	@./$(TARGET)

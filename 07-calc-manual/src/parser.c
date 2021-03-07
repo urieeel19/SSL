@@ -78,10 +78,10 @@ void Definicion()
 int Expresion(void)
 {
     int resultado = Termino();
-    while (GetNextToken().type == SUMA)
+    if (GetNextToken().type == SUMA)
     {
         Match(SUMA);
-        resultado = resultado + Termino();
+        resultado = resultado + Expresion();
     }
     return resultado;
 }
@@ -89,13 +89,12 @@ int Expresion(void)
 int Termino(void)
 {
     int resultado = Factor();
-    switch (GetNextToken().type){
-    case PRODUCTO: 
+    if (GetNextToken().type == PRODUCTO)
+    {
         Match(PRODUCTO);
         resultado = resultado * Termino();
-        break;
-        default: return resultado;
-}
+    }
+    return resultado;    
 }
 
 int Factor(void)
