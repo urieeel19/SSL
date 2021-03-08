@@ -1,14 +1,20 @@
 %{
+/* parser.y
+ - Reglas sintácticas, producciones. Compilable de Bison.
+ - Rubin Uriel - 1438724 - UTN FRBA
+ - 04/03/2021
+*/
+
 #include "memory.h"
 #include "scanner.h"
 #include "parser.h"
 #include <stdio.h> //printf
 #include <stdlib.h> //exit
 
-/* FUNCIONES PRIVADAS */
+/* Prototipos de funciones privadas */
 static void mostrarResultado(int);
-static int yylex(void);
-static void yyerror(char const *);
+static int yylex();
+static void yyerror();
 
 %}
 
@@ -21,76 +27,77 @@ static void yyerror(char const *);
 /* Definición de tokens */
 %token <value> CONSTANTE
 %token <name> IDENTIFICADOR
-%token <name> SUMA
-%token <name> MULTIPLICACION
-%token <name> IGUAL
-%token <name> DEF
-%token <name> FDS
-%token <name> FDT
-%token <name> NAT
-%token <name> PARENDERECHO
-%token <name> PARENIZQUIERDO
+%token SUMA
+%token PRODUCTO
+%token IGUAL
+%token DEFINICION
+%token FDS
+%token FDT
+%token NAT
+%token PARENDERECHO
+%token PARENIZQUIERDO
 /* Definición de no-terminales */
-%type <name> parser
-%type <name> sentencias
-%type <name> unasentencia
-%type <value> expresion
 %type <value> definicion
+%type <value> expresion
 %type <value> termino
 %type <value> factor
 %start parser
 
 %%
-parser: sentencias FDT;
-
-sentencias: unasentencia
-          | unasentencia sentencias
+parser: listaSentencias FDT { YYACCEPT;}
 ;
 
-unasentencia: DEF definicion FDS
-         | expresion FDS { mostrarResultado($1); }
+listaSentencias: sentencia FDS
+          | sentencia FDS listaSentencias
 ;
 
-definicion: IDENTIFICADOR IGUAL CONSTANTE { Assign(GetPosition($1), $3); }
+sentencia: DEFINICION definicion
+         | IGUAL expresion { mostrarResultado($2); }
+;
+
+definicion: IDENTIFICADOR IGUAL CONSTANTE { Assign($1, $3); }
 
 expresion: termino { $$ = $1; }
          | expresion SUMA termino { $$ = $1 + $3; }
 ;
 
 termino: factor { $$ = $1; }
-       | termino MULTIPLICACION factor { $$ = $1 * $3; }
- ;
+       | termino PRODUCTO factor { $$ = $1 * $3; }
+;
 
-factor: IDENTIFICADOR { int aux = GetValue($1); if(aux!=(-1)) $$=aux; else exit(1); }
+factor: IDENTIFICADOR { int aux = GetValue($1); $$=aux;}
       | CONSTANTE { $$ = $1; }
       | PARENIZQUIERDO expresion PARENDERECHO { $$ = $2; }
 ;
 
 %%
 
-/* FUNCIONES PUBLICAS */
-
-void yyerror(char const *sentencia){
-  printf("SYNTAX ERROR: %s\n", sentencia);
+/* Definición de funciones privadas */
+// yyerror es utilizada para mostrar que ocurrió un error y cerrar el programa.
+void yyerror(){
+  printf("[Parser] Sintaxis incorrecta.");
+  exit(3);
 }
 
 int yylex(void){   
     return GetNextToken();
 }
 
+/* Definición de funciones públicas */
+// Definición de Parser()
 void Parser(void){
   switch(yyparse()){
     case 0:
-      return;
-    case 1:
+      printf("[Parser] Finalizado de manera exitosa.");
       return;
     default:
-      printf("Error\n");
+      yyerror();
       return;
   }
 }
+// yyparse lee tokens y ejecuta acciones. Retorna al matchear FDT
 
-/* FUNCIONES PRIVADAS */
+// mostrarResultado imprime por pantalla el resultado de la expresión parseada.
 static void mostrarResultado(int valor) {
     printf("Resultado: %d\n", valor);
 }

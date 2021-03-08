@@ -3,8 +3,8 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-// Declaración de flag para habilitar/deshabilitar consumo de TOKENS
-extern int keepLastToken;
+// Definición de flag público
+int keepLastToken;
 
 // Definición tipoDeToken
 typedef enum
@@ -35,8 +35,7 @@ typedef struct TOKEN
     } data;
 } TOKEN;
 
-#endif
-
 // Prototipo de funciones públicas
 // Función que se encarga de devolver los TOKENs según lo que el scanner analiza.
 TOKEN GetNextToken(void);
+#endif

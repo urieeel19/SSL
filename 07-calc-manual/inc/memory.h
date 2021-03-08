@@ -13,6 +13,5 @@ typedef struct variable
 #endif
 
 // Prototipos de funciones públicas para el manejo de memoria.
-unsigned GetPosition(char[]);
-void Assign(unsigned, int);
+void Assign(char*, int);
 int GetValue(char[]);

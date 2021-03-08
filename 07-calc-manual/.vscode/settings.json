@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "parser.h": "c",
-        "scanner.h": "c"
+        "scanner.h": "c",
+        "type_traits": "c",
+        "stdlib.h": "c"
     }
 }
