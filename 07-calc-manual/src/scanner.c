@@ -3,7 +3,6 @@
 #include <stdlib.h> //exit
 #include <ctype.h>  //isalpha isdigit
 #include <string.h> //strcpy
-int keepLastToken = 0;
 
 // Prototipos para el manejo del buffer
 char buffer[MAX_NAME_LENGTH] = {};
@@ -172,7 +171,6 @@ TOKEN Scanner()
 //---------- BUFFER ------------//
 void AddCharacter(char c)
 {
-    printf("Indice: %d\n",bufferIndex);
     if(bufferIndex >= MAX_NAME_LENGTH){
         CleanBuffer();
         exit(5);
