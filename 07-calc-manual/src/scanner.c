@@ -172,7 +172,8 @@ TOKEN Scanner()
 //---------- BUFFER ------------//
 void AddCharacter(char c)
 {
-    if(bufferIndex >= MAX_NAME_LENGTH -1){
+    printf("Indice: %d\n",bufferIndex);
+    if(bufferIndex >= MAX_NAME_LENGTH){
         CleanBuffer();
         exit(5);
     }else{
