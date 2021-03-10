@@ -3,6 +3,10 @@
         "parser.h": "c",
         "scanner.h": "c",
         "type_traits": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "errors.h": "c",
+        "cstdlib": "c",
+        "memory.h": "c",
+        "types.h": "c"
     }
 }

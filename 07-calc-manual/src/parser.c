@@ -1,33 +1,19 @@
 #include "../inc/scanner.h"
 #include "../inc/parser.h"
 #include "../inc/memory.h"
-#include <stdlib.h> //exit
+#include "../inc/errors.h" // manejo de errores
 #include <string.h>
 
-void ShowType(tipoDeToken);
-
 TOKEN tok; //Token actual
-char tipos[][100] = {"Not a token (NAT)",
-                    "INICIO",
-                    "FIN",
-                    "IDENTIFICADOR",
-                    "CONSTANTE",
-                    "IGUAL",
-                    "Parentesis izquierdo (PARENIZQUIERDO)",
-                    "Parentesis derecho (PARENDERECHO)",
-                    "SUMA",
-                    "PRODUCTO",
-                    "DEFINICION",
-                    "Fin de sentencia (FDS)",
-                    "Fin de texto (FDT)"};
+
 //Prototipos de funciones privadas
 static void Match(tipoDeToken);
 void ListaSentencias(void);
 void Sentencia(void);
 void Definicion(void);
-int Expresion(void);
-int Termino(void);
-int Factor(void);
+number Expresion(void);
+number Termino(void);
+number Factor(void);
 
 //Definición de función pública
 void Parser()
@@ -47,7 +33,7 @@ void ListaSentencias()
 
 void Sentencia()
 {
-    int resultado;
+    number resultado;
     switch (GetNextToken().type)
     {
     case DEFINICION:
@@ -56,28 +42,31 @@ void Sentencia()
         break;
     case IGUAL:
         Match(IGUAL);
-        resultado = Expresion();                //Expresión devuelve un resultado.
-        printf("Resultado = %d \n", resultado); //Muestra resultado de la expresión.
+        resultado = Expresion();
+        if(resultado < 0)
+            showError(DESBORDAMIENTO_DE_ENTERO);                //Expresión devuelve un resultado.
+        printf("Resultado = %ld \n", (long)resultado); //Muestra resultado de la expresión.
         break;
     default:
-        exit(1);
+        showError(ERROR_DE_SINTAXIS);
         break;
     }
     Match(FDS);
 }
 
 void Definicion()
-{   char auxName [MAX_NAME_LENGTH];
+{
+    char auxName[MAX_NAME_LENGTH];
     Match(IDENTIFICADOR); //Matcheo IDENTIFICADOR
-    strcpy(auxName, tok.data.name);                       
-    Match(IGUAL);                                   //Matcheo IGUAL
-    Match(CONSTANTE);                               //Matcheo CONSTANTE a ser asignada.
-    Assign(auxName, tok.data.value);               //Asignacion
+    strcpy(auxName, tok.data.name);
+    Match(IGUAL);                    //Matcheo IGUAL
+    Match(CONSTANTE);                //Matcheo CONSTANTE a ser asignada.
+    Assign(auxName, tok.data.value); //Asignacion
 }
 
-int Expresion(void)
+number Expresion(void)
 {
-    int resultado = Termino();
+    number resultado = Termino();
     if (GetNextToken().type == SUMA)
     {
         Match(SUMA);
@@ -86,20 +75,20 @@ int Expresion(void)
     return resultado;
 }
 
-int Termino(void)
+number Termino(void)
 {
-    int resultado = Factor();
+    number resultado = Factor();
     if (GetNextToken().type == PRODUCTO)
     {
         Match(PRODUCTO);
         resultado = resultado * Termino();
     }
-    return resultado;    
+    return resultado;
 }
 
-int Factor(void)
+number Factor(void)
 {
-    int resultado;
+    number resultado;
     switch (GetNextToken().type)
     {
     case IDENTIFICADOR:
@@ -116,7 +105,7 @@ int Factor(void)
         Match(PARENDERECHO);
         break;
     default:
-        printf("[Parser] Error en la sintaxis.");
+        showError(ERROR_DE_SINTAXIS);
     }
     return resultado;
 }
@@ -126,15 +115,7 @@ static void Match(tipoDeToken tipoEsperado)
 {
     if ((tok = GetNextToken()).type != tipoEsperado)
     {
-        printf("[Parser] Error en la sintaxis.\n");
-        exit(3);
+        showError(ERROR_DE_SINTAXIS);
     }
     keepLastToken = 0;
 }
-
-void ShowType(tipoDeToken tipo)
-{
-    printf("Tipo: %s\n" , tipos[tipo]);
-}
-
-//josemariasola@frba.utn.edu.ar

@@ -11,7 +11,8 @@ ARCHIVO_OBTENIDO = $(TEST_DIR)/obtenido.txt
 OBJS = $(OBJ_DIR)/calc.o \
 		$(OBJ_DIR)/parser.o \
 		$(OBJ_DIR)/scanner.o \
-		$(OBJ_DIR)/memory.o
+		$(OBJ_DIR)/memory.o \
+		$(OBJ_DIR)/errors.o
 CC = gcc
 CFLAGS = -I$(INC_DIR)
 

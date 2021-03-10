@@ -1,13 +1,14 @@
-#include "../inc/scanner.h"
 #include <stdio.h>  //printf
-#include <stdlib.h> //exit
 #include <ctype.h>  //isalpha isdigit
 #include <string.h> //strcpy
+#include "scanner.h"
+#include <stdlib.h>
+#include "../inc/errors.h" // manejo de errores
 
 // Prototipos para el manejo del buffer
-char buffer[MAX_NAME_LENGTH] = {};
-void AddCharacter(char); //Agrega caracter al buffer
-void CleanBuffer();      //Limpia el buffer
+char buffer[MAX_LEXEME_LENGTH] = {}; //Tamanio maximo depende
+void AddCharacter(char);             //Agrega caracter al buffer
+void CleanBuffer();                  //Limpia el buffer
 int bufferIndex = 0;
 
 // Prototipo para la creación de TOKENs
@@ -35,7 +36,6 @@ typedef enum
 
 // Prototipos de funciones privadas ----------------
 TOKEN ActionState_Qx(State, char, tipoDeToken);
-
 // Declaración de variable auxiliar para mantener el último token
 TOKEN incomingToken;
 
@@ -115,6 +115,12 @@ TOKEN Scanner()
                 actualState = Q10_fdt;
                 break;
             }
+            
+            if (c == '!')
+            {
+                // fin del programa
+            }
+
             actualState = Q11_lexError;
             break;
 
@@ -146,10 +152,10 @@ TOKEN Scanner()
 
         case Q8_definicion:
             return ActionState_Qx(actualState, c, DEFINICION);
-            
+
         case Q9_fds:
             return ActionState_Qx(actualState, c, FDS);
-            
+
         case Q10_fdt:
             if (c == '!')
                 return CreateToken(FDT);
@@ -159,25 +165,22 @@ TOKEN Scanner()
 
         case Q11_lexError:
         default:
-            printf("\n[Scanner] Lexical error. El caracter no pertenece al alfabeto soportado.\n\n");
-            c = '#';
-            ungetc(c, stdin);
-            break;
+            showError(CARACTER_INVALIDO);
+            //c = '#';
+            //ungetc(c, stdin);
+            //break;
         }
     }
-    exit(4);
+    //exit(4);
 }
 
 //---------- BUFFER ------------//
 void AddCharacter(char c)
 {
-    if(bufferIndex >= MAX_NAME_LENGTH){
-        CleanBuffer();
-        exit(5);
-    }else{
-        buffer[bufferIndex] = c;
-        bufferIndex++;
-    }
+    if (bufferIndex >= MAX_LEXEME_LENGTH)
+        showError(LONGITUD_MAXIMA_LEXEME);
+    buffer[bufferIndex] = c;
+    bufferIndex++;
 }
 
 void CleanBuffer()
@@ -191,15 +194,23 @@ void CleanBuffer()
 TOKEN CreateToken(tipoDeToken tipo)
 {
     TOKEN newToken;
-    if (tipo == IDENTIFICADOR)
+    switch (tipo)
+    {
+    case IDENTIFICADOR:
         strcpy(newToken.data.name, buffer);
-    if (tipo == CONSTANTE)
-        newToken.data.value = atoi(buffer);
+        break;
+    case CONSTANTE:
+        if (strlen(buffer) > MAX_CONSTANT_DIGITS)
+                showError(LONGITUD_MAXIMA_CONSTANTE);
+        newToken.data.value = atol(buffer);
+        break;
+    }
     newToken.type = tipo;
     return newToken;
 }
 
-TOKEN ActionState_Qx(State state, char c, tipoDeToken type_Qx){
+TOKEN ActionState_Qx(State state, char c, tipoDeToken type_Qx)
+{
     state = Q0_inicial;
     ungetc(c, stdin);
     return CreateToken(type_Qx);
