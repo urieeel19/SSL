@@ -150,6 +150,7 @@ El valor devuelto por yyparse es 0 si el análisis tuvo éxito (el retorno se de
 
 ```c
 <Parser>     -> <listaSentencias> FDT
+              | FDT
 <listaSentencias> -> Sentencia FDS { <Sentencia> FDS }
 <Sentencia> -> DEF <Definición>
                IGUAL <Expresión>
