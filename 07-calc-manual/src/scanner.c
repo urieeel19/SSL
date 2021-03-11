@@ -117,9 +117,7 @@ TOKEN Scanner()
             }
             
             if (c == '!')
-            {
-                // fin del programa
-            }
+                return CreateToken(FDT);
 
             actualState = Q11_lexError;
             break;

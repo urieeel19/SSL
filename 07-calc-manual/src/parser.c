@@ -18,9 +18,13 @@ number Factor(void);
 //Definición de función pública
 void Parser()
 {
+    if (GetNextToken().type == FDT)
+    {
+        Match(FDT);
+    }else{
     ListaSentencias();
     Match(FDT);
-    printf("[Parser] Finalizado de manera exitosa.");
+    }
 }
 
 //Definiciones de funciones privadas

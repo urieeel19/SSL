@@ -8,4 +8,5 @@
 int main()
 {
      Parser();
+     printf("[Programa] Finalizado de manera exitosa.");
 }
