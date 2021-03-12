@@ -13,7 +13,6 @@
 #include "../inc/errors.h"
 #include "../inc/types.h"
 
-
 #define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 /* Prototipos de funciones privadas */
 static void mostrarResultado(number);
@@ -25,7 +24,7 @@ static void yyerror(char *);
 %union 
 {
   int value;
-  char name[21];
+  char name[10];
 }
 
 /* Definición de tokens */

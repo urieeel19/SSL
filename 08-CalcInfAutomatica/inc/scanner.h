@@ -1,4 +1,3 @@
-#define MAX_NAME_LENGTH 21
 #include "../inc/types.h"
 
 #ifndef SCANNER_H

@@ -1,3 +1,5 @@
+#define MAX_NAME_LENGTH 10
+
 #ifndef MEMORY_H
 #define MEMORY_H
 

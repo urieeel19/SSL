@@ -3,10 +3,9 @@
 #include "types.h"
 
 #define MAX(x, y) ((x > y) ? x : y)
-#define MAX_NAME_LENGTH 21
-#define MAX_CONSTANT_DIGITS 30
+#define MAX_NAME_LENGTH 10
+#define MAX_CONSTANT_DIGITS 8
 #define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
-#define MAX_VALUE_INTEGER 2147483647
 // Definición de flag público
 int keepLastToken;
 
