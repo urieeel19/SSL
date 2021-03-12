@@ -1,31 +1,30 @@
 %{
 /* scanner.l
  - Reglas léxicas y TOKENs. Compilable de Flex.
- - Rubin Uriel - 1438724 - UTN FRBA
- - 04/03/2021
+ - Rubin Uriel - UTN FRBA
+ - 16/03/2021
 */
 
 #include <stdlib.h> //atoi()
 #include <stdio.h>  //printf()
 #include <string.h>  //strcpy()
 #include "token.h" //Incluyo el header generado por bison
-#define MAX_NAME_LENGTH 20
+#include "../inc/types.h"
+
 #undef YY_DECL
-#define YY_DECL int GetNextToken(void)
-YY_DECL;
-void AddBuffer();
+#define YY_DECL number GetNextToken(void)
 %}
 %option noyywrap
 
-%%
+%%      
 
-[0-9]+                  {
-                        yylval.value = atoi(yytext);
+[0-9]{1,8}              {
+                        yylval.value = atol(yytext);
                         return CONSTANTE;
                         }
 
-[a-zA-Z][a-zA-Z | 0-9]*  {
-                        AddBuffer(); //Copio a yylval lo que ingreso a yytext
+[a-zA-Z][a-zA-Z | 0-9]{0,7}     {
+                        strcpy(yylval.name, yytext); //Copio a yylval lo que ingreso a yytext
                         return IDENTIFICADOR;
                         }
 
@@ -50,11 +49,3 @@ void AddBuffer();
 .                       return NAT;
 
 %%
-
-void AddBuffer()
-{
-    if(strlen(yytext) > MAX_NAME_LENGTH)
-        exit(5);
-    else
-        strcpy(yylval.name, yytext);
-}

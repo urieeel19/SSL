@@ -1,9 +1,10 @@
 #include "../inc/memory.h"
-#include <stdio.h> //printf
-#include <stdlib.h> //exit
+#include <stdio.h>  //printf
 #include <string.h> //strcmp
+#include "../inc/errors.h" // manejo de errores
 
 // Declaración de variables
+#define MEMORY_SIZE 200
 unsigned memoryLastPosition = 0;
 variable Memory[MEMORY_SIZE];
 
@@ -26,13 +27,14 @@ unsigned GetPosition(char name[])
 }
 
 // Assign le asigna a la posición pasada por parámetro el valor requerido.
-void Assign(char name[], int value)
-{   int index = GetPosition(name);
+void Assign(char name[], number value)
+{
+    int index = GetPosition(name);
     Memory[index].value = value;
 }
 
 //GetValue busca por nombre la variable y devuelve su valor.
-int GetValue(char name[])
+number GetValue(char name[])
 {
     for (unsigned i = 0; i <= memoryLastPosition; ++i)
     {
@@ -41,5 +43,5 @@ int GetValue(char name[])
             return Memory[i].value;
         }
     }
-    exit(2);
+    showError(VARIABLE_INEXISTENTE);
 }

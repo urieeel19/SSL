@@ -195,6 +195,8 @@ TOKEN CreateToken(tipoDeToken tipo)
     switch (tipo)
     {
     case IDENTIFICADOR:
+    if (strlen(buffer) > MAX_NAME_LENGTH)
+                showError(LONGITUD_MAXIMA_IDENTIFICADOR);
         strcpy(newToken.data.name, buffer);
         break;
     case CONSTANTE:

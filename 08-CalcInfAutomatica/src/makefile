@@ -10,6 +10,7 @@ SRC_DIR = .
 OBJS = $(OBJ_DIR)/calc.o \
 		$(OBJ_DIR)/parser.o \
 		$(OBJ_DIR)/scanner.o \
+		$(OBJ_DIR)/errors.o \
 		$(OBJ_DIR)/memory.o
 
 FLEX_RULES = $(RUL_DIR)/scanner.l
@@ -56,5 +57,5 @@ test : $(TARGET)
 	@diff -q -s $(ARCHIVO_ESPERADO) $(ARCHIVO_OBTENIDO)
 
 run : $(TARGET)
-	@echo Inicio de calculadora Automatica -Doble enter para finalizar-
+	@echo Inicio de calculadora Automatica -! para finalizar-
 	@./$(TARGET)

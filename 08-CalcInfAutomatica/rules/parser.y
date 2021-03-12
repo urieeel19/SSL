@@ -1,27 +1,31 @@
 %{
 /* parser.y
  - Reglas sintácticas, producciones. Compilable de Bison.
- - Rubin Uriel - 1438724 - UTN FRBA
- - 04/03/2021
+ - Rubin Uriel - UTN FRBA
+ - 16/03/2021
 */
 
 #include "memory.h"
 #include "scanner.h"
 #include "parser.h"
 #include <stdio.h> //printf
-#include <stdlib.h> //exit
+#include <stdlib.h> 
+#include "../inc/errors.h"
+#include "../inc/types.h"
 
+
+#define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 /* Prototipos de funciones privadas */
-static void mostrarResultado(int);
-static int yylex();
-static void yyerror();
+static void mostrarResultado(number);
+static number yylex();
+static void yyerror(char *);
 
 %}
 
 %union 
 {
   int value;
-  char name[20];
+  char name[21];
 }
 
 /* Definición de tokens */
@@ -45,6 +49,7 @@ static void yyerror();
 
 %%
 parser: listaSentencias FDT { YYACCEPT;}
+      | FDT{ YYACCEPT;}
 ;
 
 listaSentencias: sentencia FDS
@@ -74,12 +79,11 @@ factor: IDENTIFICADOR { int aux = GetValue($1); $$=aux;}
 
 /* Definición de funciones privadas */
 // yyerror es utilizada para mostrar que ocurrió un error y cerrar el programa.
-void yyerror(){
-  printf("[Parser] Sintaxis incorrecta.");
-  exit(3);
+void yyerror(char * stringError){
+  showError(atoi( stringError ));
 }
 
-int yylex(void){   
+number yylex(void){   
     return GetNextToken();
 }
 
@@ -88,16 +92,15 @@ int yylex(void){
 void Parser(void){
   switch(yyparse()){
     case 0:
-      printf("[Parser] Finalizado de manera exitosa.");
       return;
     default:
-      yyerror();
+      yyerror("1");
       return;
   }
 }
 // yyparse lee tokens y ejecuta acciones. Retorna al matchear FDT
 
 // mostrarResultado imprime por pantalla el resultado de la expresión parseada.
-static void mostrarResultado(int valor) {
-    printf("Resultado: %d\n", valor);
-}
+static void mostrarResultado(number valor) {
+    printf("Resultado: %ld\n", (long)valor);
+}   

@@ -1,14 +1,11 @@
-/* Calculadora Automática Infija
- - calc.c
- - Analizador léxico y sintáctico (FLEX/BISON) de sentencias según lenguaje definido en readme.md
- - Rubin Uriel - 1438724 - UTN FRBA
- - 04/03/2021
-*/
+//https://miro.com/app/board/o9J_lZ_aUhE=/
+//Link al miro
 
+#include <stdio.h>  //printf
 #include "parser.h"
 
 int main()
 {
-    Parser();
-    return 0;
+     Parser();
+     printf("[Programa] Finalizado de manera exitosa.");
 }

@@ -9,7 +9,7 @@ char tablaDeErrores[][100] = {
     "[Scanner] La longitud del LEXEMA es demasiada larga.",
     "[Scanner] La longitud del IDENTIFICIADOR es demasiada larga.",
     "[Scanner] La longitud de la CONSTANTE es demasiada larga.",
-    "El resultado de la operación supera al valor maximo."
+    "[Memory] El resultado de la operación supera al valor maximo."
 };
 
 void showError(Errors numError)
