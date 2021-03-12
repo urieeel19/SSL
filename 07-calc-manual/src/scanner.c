@@ -164,12 +164,8 @@ TOKEN Scanner()
         case Q11_lexError:
         default:
             showError(CARACTER_INVALIDO);
-            //c = '#';
-            //ungetc(c, stdin);
-            //break;
         }
     }
-    //exit(4);
 }
 
 //---------- BUFFER ------------//

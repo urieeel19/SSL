@@ -14,7 +14,7 @@
 
 #define MAX(x, y) ((x > y) ? x : y)
 #define MAX_NAME_LENGTH 10
-#define MAX_CONSTANT_DIGITS 8
+#define MAX_CONSTANT_DIGITS 12
 #define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 
 void ValidarMaximoConstante(char*);

@@ -99,7 +99,10 @@ void Parser(void){
 }
 // yyparse lee tokens y ejecuta acciones. Retorna al matchear FDT
 
-// mostrarResultado imprime por pantalla el resultado de la expresión parseada.
+// mostrarResultado si no hay desbordamiento 
+//imprime por pantalla el resultado de la expresión parseada.
 static void mostrarResultado(number valor) {
-    printf("Resultado: %ld\n", (long)valor);
+  if(valor < 0)
+    showError(DESBORDAMIENTO_DE_ENTERO);
+  printf("Resultado: %ld\n", (long)valor);
 }   
