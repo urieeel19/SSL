@@ -13,9 +13,6 @@ int keepLastToken;
 // Definición tipoDeToken
 typedef enum
 {
-    NAT,
-    INICIO,
-    FIN,
     IDENTIFICADOR,
     CONSTANTE,
     IGUAL,

@@ -36,7 +36,6 @@ static void yyerror(char *);
 %token DEFINICION
 %token FDS
 %token FDT
-%token NAT
 %token PARENDERECHO
 %token PARENIZQUIERDO
 /* Definición de no-terminales */

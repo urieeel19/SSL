@@ -56,7 +56,9 @@ void ValidarMaximoIdentificador(char*);
 
 [\s\t\n]                ;
 
-.                       return NAT;
+.                       {
+                        showError(ERROR_LEXICO);
+                        }
 
 %%
 

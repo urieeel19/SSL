@@ -163,7 +163,7 @@ TOKEN Scanner()
 
         case Q11_lexError:
         default:
-            showError(CARACTER_INVALIDO);
+            showError(ERROR_LEXICO);
         }
     }
 }
