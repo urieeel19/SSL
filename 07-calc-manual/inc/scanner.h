@@ -1,11 +1,7 @@
 #ifndef SCANNER_H
 #define SCANNER_H
-#include "types.h"
+#include "general.h"
 
-#define MAX(x, y) ((x > y) ? x : y)
-#define MAX_NAME_LENGTH 10
-#define MAX_CONSTANT_DIGITS 8
-#define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 // Definición de flag público
 int keepLastToken;
 

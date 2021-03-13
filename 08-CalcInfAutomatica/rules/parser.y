@@ -11,7 +11,7 @@
 #include <stdio.h> //printf
 #include <stdlib.h> 
 #include "../inc/errors.h"
-#include "../inc/types.h"
+#include "../inc/general.h"
 
 #define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 /* Prototipos de funciones privadas */
@@ -23,7 +23,7 @@ static void yyerror(char *);
 
 %union 
 {
-  int value;
+  long value;
   char name[10];
 }
 
@@ -68,7 +68,7 @@ termino: factor { $$ = $1; }
        | termino PRODUCTO factor { $$ = $1 * $3; }
 ;
 
-factor: IDENTIFICADOR { int aux = GetValue($1); $$=aux;}
+factor: IDENTIFICADOR { number aux = GetValue($1); $$=aux;}
       | CONSTANTE { $$ = $1; }
       | PARENIZQUIERDO expresion PARENDERECHO { $$ = $2; }
 ;

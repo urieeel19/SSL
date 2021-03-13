@@ -1,8 +1,7 @@
 #ifndef MEMORY_H
 #define MEMORY_H
+#include "general.h"
 
-#include "scanner.h" // Para saber la longitud maxima del nombre de la variable.
-#include "types.h"
 // Definición de la estructura variable
 typedef struct variable
 {

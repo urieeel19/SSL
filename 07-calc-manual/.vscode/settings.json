@@ -7,6 +7,6 @@
         "errors.h": "c",
         "cstdlib": "c",
         "memory.h": "c",
-        "types.h": "c"
+        "general.h": "c"
     }
 }

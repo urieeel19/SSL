@@ -1,4 +1,4 @@
-#include "../inc/types.h"
+#include "../inc/general.h"
 
 #ifndef SCANNER_H
 #define SCANNER_H
