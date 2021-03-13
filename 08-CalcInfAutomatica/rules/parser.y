@@ -17,7 +17,7 @@
 /* Prototipos de funciones privadas */
 static void mostrarResultado(number);
 static number yylex();
-static void yyerror(char *);
+static void yyerror();
 
 %}
 
@@ -77,8 +77,8 @@ factor: IDENTIFICADOR { number aux = GetValue($1); $$=aux;}
 
 /* Definición de funciones privadas */
 // yyerror es utilizada para mostrar que ocurrió un error y cerrar el programa.
-void yyerror(char * stringError){
-  showError(atoi( stringError ));
+void yyerror(){
+  showError(ERROR_DE_SINTAXIS);
 }
 
 number yylex(void){   
@@ -89,10 +89,10 @@ number yylex(void){
 // Definición de Parser()
 void Parser(void){
   switch(yyparse()){
-    case 0:
+    case SUCCESS:
       return;
     default:
-      yyerror("1");
+      yyerror();
       return;
   }
 }
