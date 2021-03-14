@@ -12,19 +12,16 @@
 #include <stdlib.h> 
 #include "../inc/errors.h"
 #include "../inc/general.h"
-
-#define MAX_LEXEME_LENGTH MAX(MAX_NAME_LENGTH, MAX_CONSTANT_DIGITS)
 /* Prototipos de funciones privadas */
 static void mostrarResultado(number);
 static number yylex();
 static void yyerror();
 
 %}
-
 %union 
 {
   long value;
-  char name[10];
+  char name[21];
 }
 
 /* Definición de tokens */
@@ -92,7 +89,7 @@ void Parser(void){
     case SUCCESS:
       return;
     default:
-      yyerror();
+    yyerror();
       return;
   }
 }
