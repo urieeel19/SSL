@@ -1,4 +1,4 @@
-![](/08-CalcInfAutomatica/imgs/Banner.png)
+![](/08-CalcInfAutomatica/imgs/BannerAutomatico.png)
 
 ---
 
