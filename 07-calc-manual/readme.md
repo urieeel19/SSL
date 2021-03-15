@@ -1,5 +1,4 @@
-![](/08-CalcInfAutomatica/imgs/Banner.png)
-
+![](/07-calc-manual/imgs/Banner.png)
 ---
 
 **¿De qué trata este trabajo?** [Link al documento.](https://josemariasola.github.io/ssl/assignments/2020/Ssl%20Assignments.pdf#page=53)
@@ -19,16 +18,15 @@
 
 Este trabajo práctico es un programa de consola desarrollado en lenguaje C. Los modulos de parser y scaner en este caso fueron desarrollados manualmente por el desarrollador.
 El proyecto consta de varios modulos.
--Parser(#parser)
--Scanner(#scanner)
--Memory(#memoria)
--Errors(#errores)
--General(#general)
+- [Parser](#parser)
+- [Scanner](#scanner)
+- [Memory](#memoria)
+- [Errors](#errores)
+- [General](#general)
 
 Otra funcionalidad con la que cuenta este programa es la de almacenar variables con sus relativos nombres en una “memoria”, pudiendo acceder a los valores asociados para realizar posteriormente la evaluación de la sentencia.
 
-Cabe destacar que las variables deben tener un máximo de 8 `char` para su nombre. Al igual que la cantidad máxima de variables almacenadas, que ahora mismo se encuentra fijada en 200.
-
+Cabe destacar que las variables tienen un maximo de 200 variables disponibles para usar.
 ---
 
 # Calculadora
@@ -147,8 +145,6 @@ Es la responsable de asignar a una posición su valor.
 Obtiene el valor de un nombre de memoria. Lo hace iterando el array y retorna su valor para ser operado en una evaluación. En caso de no existir el nombre buscado en memoria, muestra un mensaje de error ( ver tabla de errores) y sale del programa.
 
 ---
-
-![](/08-CalcInfAutomatica/imgs/Banner5.png)
 
 ## Makefile
 

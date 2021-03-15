@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 char tablaDeErrores[][100] = {
-    "[Memory] No existe esa variable en la memoria",
+    "[Memory] No existe esa variable en la memoria.",
     "[Parser] Error en la sintaxis.",
     "[Scanner] El caracter no pertenece al alfabeto soportado.",
     "[Scanner] La longitud del LEXEMA es demasiada larga.",
