@@ -142,7 +142,7 @@ Es la responsable de asignar a una posición su valor.
 
 ### `GetValue()`
 
-Obtiene el valor de un nombre de memoria. Lo hace iterando el array y retorna su valor para ser operado en una evaluación. En caso de no existir el nombre buscado en memoria, muestra un mensaje de error ( ver tabla de errores) y sale del programa.
+Obtiene el valor de un nombre de memoria. Lo hace iterando el array y retorna su valor para ser operado en una evaluación. En caso de no existir el nombre buscado en memoria, muestra un mensaje de error ( [Ver tabla de errores](#errores)) y sale del programa.
 
 ---
 
