@@ -21,7 +21,13 @@ Este trabajo práctico es un programa de consola desarrollado en lenguaje C, con
 
 Otra funcionalidad con la que cuenta este programa es la de almacenar variables con sus relativos nombres en una “memoria”, pudiendo acceder a los valores asociados para realizar posteriormente la evaluación de la sentencia.
 
-Cabe destacar que las variables deben tener un máximo de 8 `char` para su nombre. Al igual que la cantidad máxima de variables almacenadas, que ahora mismo se encuentra fijada en 200.
+Cabe destacar que las variables tienen un maximo de 200 variables disponibles para usar.
+
+- [Parser](#parser)
+- [Scanner](#scanner)
+- [Memory](#memoria)
+- [Errors](#errores)
+- [General](#general)
 
 ---
 
@@ -30,15 +36,15 @@ Cabe destacar que las variables deben tener un máximo de 8 `char` para su nombr
 ## Descripción del lenguaje utilizado
 
 - Operaciones en el dominio de los números Naturales incluyendo al 0.
-- Todos los identificadores son declarados explícitamente y con una longitud máxima de 8 caracteres.
+- Todos los identificadores son declarados explícitamente y con una longitud máxima de N caracteres, cuyo N se puede definir previo a la compilación y que por default comienza en 10.
 - Los identificadores deben comenzar con una letra y están compuestos de letras y dígitos.
-- Las constantes son secuencias de hasta 8 dígitos.
+- Las constantes son secuencias de hasta M dígitos, cuyo M se puede definir previo a la compilación y que por default comienza en 8.
 - Hay dos tipos de sentencias:
   - **Definición** > Este tipo de sentencia almacena el valor pasado en una variable.
   - **Expresión** > Esta sentencia realiza la evaluación de una expresión simple o compuesta.
 - Las variables ya existentes pueden modificar su valor. El procedimiento es el mismo que al definir una nueva variable.
-- Cada sentencia termina con un ‘’ ; ‘’, el cual hace referencia a un token llamado “FDS” que refiere al final de la sentencia. Para confirmar el ingreso de la sentencia se presiona “ENTER” ( “\n” ).
-- El final de texto (FDT) será dado por el char ' ! ' consecutivos.
+- Cada sentencia termina con un ‘’ ; ‘’, el cual hace referencia a un token llamado “FDS” (Fin de sentencia). Para confirmar el ingreso de la sentencia se presiona “ENTER” ( “\n” ).
+- El final de texto (FDT) será dado por el char ' ! '.
 
 ---
 
@@ -78,13 +84,17 @@ que genere automáticamente esta función y enlazar Flex y Bison.
 La gramática léxica, junto a los `TOKEN` que corresponden, se especifican en el archivo `scanner.l` ubicado en la carpeta `rules\`.
 
 ```c
-[0-9]{1,8}              {
-                        yylval.value = atoi(yytext);
+DIGIT [0-9]{1,30}
+IDENTIFICADOR [a-zA-Z][a-zA-Z | 0-9]{0,30} 
+      
+{DIGIT}                 {
+                        ValidarMaximoConstante();
+                        yylval.value = atol(yytext);
                         return CONSTANTE;
                         }
-
-[a-zA-Z][a-zA-Z | 0-9]{0,7}     {
-                        strcpy(yylval.name, yytext);
+{IDENTIFICADOR}         {
+                        ValidarMaximoIdentificador();
+                        strcpy(yylval.name, yytext); //Copio a yylval lo que ingreso a yytext
                         return IDENTIFICADOR;
                         }
 
@@ -106,7 +116,9 @@ La gramática léxica, junto a los `TOKEN` que corresponden, se especifican en e
 
 [\s\t\n]                ;
 
-.                       return NAT;
+.                       {
+                        showError(ERROR_LEXICO);
+                        }
 ```
 
 ### Lista de tokens
@@ -150,6 +162,7 @@ El valor devuelto por yyparse es 0 si el análisis tuvo éxito (el retorno se de
 
 ```c
 <Parser>     -> <listaSentencias> FDT
+              | FDT
 <listaSentencias> -> Sentencia FDS { <Sentencia> FDS }
 <Sentencia> -> DEF <Definición>
                IGUAL <Expresión>
@@ -171,8 +184,7 @@ El valor devuelto por yyparse es 0 si el análisis tuvo éxito (el retorno se de
 ![](/08-CalcInfAutomatica/imgs/Banner3.png)
 
 ## Memoria
-
-Esta calculadora cuenta con la funcionalidad de almacenar en memoria variables con su nombre y valor correspondiente. Esto lo realiza gracias al código desarrollado en `memory.h` y `memory.c`. Donde están definidas las siguientes funciones:
+Esta calculadora cuenta con la funcionalidad de almacenar en memoria variables con su nombre y valor correspondiente, este modulo trabajo con memoria estatica, es decir, su longitud maximo estan preestablecidos. Esto lo realiza gracias al código desarrollado en `memory.h` y `memory.c`. Donde están definidas las siguientes funciones:
 
 - `void Assign(unsigned, int);`
 - `int GetValue(char[]);`
@@ -181,12 +193,11 @@ Esta calculadora cuenta con la funcionalidad de almacenar en memoria variables c
 
 ### `Assign()`
 
-Es la responsable de asignar a cierta posición un valor natural.
+Es la responsable de asignar a una posición su valor.
 
 ### `GetValue()`
 
-Obtiene el valor de un nombre de memoria. Lo hace iterando el array y retorna su valor para ser operado en una evaluación. En caso de no existir el nombre buscado en memoria, muestra una leyenda “El identificador deseado no existe.” y corta la ejecución del programa con `exit(5);`.
-
+Obtiene el valor de un nombre de memoria. Lo hace iterando el array y retorna su valor para ser operado en una evaluación. En caso de no existir el nombre buscado en memoria, muestra un mensaje de error ( [Ver tabla de errores](#errores)) y sale del programa.
 ---
 
 ![](/08-CalcInfAutomatica/imgs/Banner5.png)
@@ -213,7 +224,7 @@ Como _ventaja_ de realizar la compilación a través de este método, obtenemos 
 
 ### Test
 
-La rutina que se ejecuta con el comando `make test`, nos permite con un input preestablecido en el archivo `entrada.txt` ubicado en la carpeta `/test`, obtener una salida que será escrita en `obtenido.txt` la cual posteriormente será comparada automáticamente utilizando el comando `comp`. Este nos advierte si encuentra una diferencia entre `obtenido.txt` y `esperado.txt`. Dándonos la posibilidad de identificar en caso de que falle, dónde lo está haciendo.
+La rutina que se ejecuta con el comando `make test`, nos permite con un input preestablecido en el archivo `entrada.txt` ubicado en la carpeta `/test`, obtener una salida que será escrita en `obtenido.txt` la cual posteriormente será comparada automáticamente utilizando el comando `diff`. Este nos advierte si encuentra una diferencia entre `obtenido.txt` y `esperado.txt`. Dándonos la posibilidad de identificar en caso de que falle, dónde lo está haciendo.
 
 ### Clean
 
@@ -224,17 +235,17 @@ Utilizaremos el comando `make clean` para limpiar de nuestro repositorio los arc
 Por último, utilizaremos el comando `make run` para ejecutar directamente el archivo `Calculadora.exe` y realizar la entrada manual sentencias..
 
 ### Errores
+Los errores estas definidos en una enumeracion para una mejor claridad del codigo al ser compartido con otro desarrollador.
 
 | Código de error | Descripción                                                  |
 | --------------- | ------------------------------------------------------------ |
-| 1               | Error léxico. Sucede en la etapa de análisis realizada por el *Scanner*. |
-| 2               | Error sintáctico. Sucede en la subrutina semántica de `Sentencia`. |
-| 3               | Error sintáctico. Sucede en la subrutina semántica de `Factor`. |
-| 4               | Error sintáctico. Sucede en la función `Match`.              |
-| 5               | Error de memoria. El identificador solicitado no existe en memoria. |
-
-
-
+| VARIABLE_INEXISTENTE               | [Memory] No existe esa variable en la memoria. |
+| ERROR_DE_SINTAXIS               | [Parser] Error en la sintaxis. |
+| ERROR_LEXICO               | [Scanner] El caracter no pertenece al alfabeto soportado. |
+| LONGITUD_MAXIMA_LEXEME               | [Scanner] La longitud del LEXEMA es demasiada larga.              |
+| LONGITUD_MAXIMA_IDENTIFICADOR               | [Scanner] La longitud del IDENTIFICIADOR es demasiada larga. |
+| LONGITUD_MAXIMA_CONSTANTE               | [Scanner] La longitud de la CONSTANTE es demasiada larga. |
+| DESBORDAMIENTO_DE_ENTERO               | El resultado de la operación supera al valor maximo.              |
 ---
 
 ![](/08-CalcInfAutomatica/imgs/Banner4.png)
