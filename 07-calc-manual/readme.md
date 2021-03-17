@@ -11,7 +11,7 @@
 
   - [Tabla de contenidos](#tabla-de-contenidos)
   - [Síntesis](#síntesis)
-  - [Calculadora](#calculadora) - [Descripción del lenguaje utilizado](#descripción-del-lenguaje-utilizado) - [Scanner](#scanner) - [La función del analizador léxico](#la-funcion-del-analizador-lexico) - [Gramática Léxica](#gramática-léxica) - [Lista de tokens](#lista-de-tokens) - [Parser](#parser) - [La función del analizador sintáctico](#la-funcion-del-analizador-sintactico) - [Gramática Sintáctica](#gramática-sintáctica) - [Memoria](#memoria) - [Assign()](#assign) - [GetValue()](#getvalue) - [Makefile](#makefile) - [Compilación](#compilación) - [Test](#test) - [Clean](#clean) - [Códigos de errores](#errores) - [Inconvenientes encontrados](#inconvenientes-encontrados) - [Miro](#miro)
+  - [Calculadora](#calculadora) - [Descripción del lenguaje utilizado](#descripción-del-lenguaje-utilizado) - [Scanner](#scanner) - [La función del analizador léxico](#la-funcion-del-analizador-lexico) - [Gramática Léxica](#gramática-léxica) - [Lista de tokens](#lista-de-tokens) - [Parser](#parser) - [La función del analizador sintáctico](#la-funcion-del-analizador-sintactico) - [Gramática Sintáctica](#gramática-sintáctica) - [Memoria](#memoria) - [Assign()](#assign) - [GetValue()](#getvalue) - [Makefile](#makefile) - [Compilación](#compilación) - [Test](#test) - [Clean](#clean) - [Códigos de errores](#errores) - [Inconvenientes encontrados](#inconvenientes-encontrados)
     <!--te-->
 
 # Síntesis
